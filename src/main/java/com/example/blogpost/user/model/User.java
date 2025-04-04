@@ -1,5 +1,6 @@
 package com.example.blogpost.user.model;
 
+import com.example.blogpost.common.model.TimeStampedBaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -11,8 +12,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 @Entity
-@Table(name = "my_table",schema = "public")
-public class User implements UserDetails {
+@Table(name = "BLOG_POST_USER",schema = "public")
+public class User extends TimeStampedBaseEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,14 +26,15 @@ public class User implements UserDetails {
     private String password;
     @Column(name = "about_me")
     private String aboutMe;
-    @Column(name = "crt_date")
-    private Date crtDate;
-    @Column(name = "up_dt_date")
-    private Date upDtDate;
-    @Column(name = "ip_address")
-    private String ipAddress;
-    @Column(name = "is_active")
-    private boolean isActive;
+
+    public User() {
+        super();
+    }
+
+    public User(Long userId) {
+        super();
+        this.id = userId;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -81,35 +83,4 @@ public class User implements UserDetails {
         this.aboutMe = aboutMe;
     }
 
-    public Date getCrtDate() {
-        return crtDate;
-    }
-
-    public void setCrtDate(Date crtDate) {
-        this.crtDate = crtDate;
-    }
-
-    public Date getUpDtDate() {
-        return upDtDate;
-    }
-
-    public void setUpDtDate(Date upDtDate) {
-        this.upDtDate = upDtDate;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 }

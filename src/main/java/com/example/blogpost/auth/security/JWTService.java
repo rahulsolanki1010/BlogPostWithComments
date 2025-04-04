@@ -2,6 +2,7 @@ package com.example.blogpost.auth.security;
 
 import com.example.blogpost.response.SuccessResponse;
 import com.example.blogpost.response.TokenResponse;
+import com.example.blogpost.user.model.User;
 import com.example.blogpost.user.service.UserDetailsService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Optional;
 
 @Component
 public class JWTService {
@@ -28,7 +30,7 @@ public class JWTService {
     @Autowired
     UserDetailsService userDetailsService;
 
-    public UserDetails getUserDetailsFromToken(String token) {
+    public Optional<User> getUserDetailsFromToken(String token) {
         String username = extractUserNameFromToken(token);
         return userDetailsService.getUserByUsername(username);
     }
@@ -48,12 +50,12 @@ public class JWTService {
 
     public boolean validateToken(String token) {
         Date expDate = extractExpiryDateFromToken(token);
-        return expDate.before(new Date());
+        return expDate.after(new Date());
     }
 
     public ResponseEntity<SuccessResponse> generateToken(String username) {
         String token = Jwts.builder().setSubject(username)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60))
+                .setExpiration(new Date(System.currentTimeMillis() + 864000))
                 .signWith(getsigningkey(), SignatureAlgorithm.HS256)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .compact();

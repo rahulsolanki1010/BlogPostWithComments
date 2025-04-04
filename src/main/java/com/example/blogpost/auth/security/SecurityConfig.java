@@ -1,5 +1,6 @@
 package com.example.blogpost.auth.security;
 
+import com.example.blogpost.user.service.AuthenticationService;
 import com.example.blogpost.user.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,13 +18,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.example.blogpost.common.constant.CmnConstants.PUBLIC_END_POINTS;
+
 @Configuration
 public class SecurityConfig{
     @Autowired
     JWTAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
-    UserDetailsService userDetailsService;
+    AuthenticationService authenticationService;
+
 
 
     @Bean
@@ -32,7 +36,7 @@ public class SecurityConfig{
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers(PUBLIC_END_POINTS).permitAll()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -44,7 +48,7 @@ public class SecurityConfig{
     @Bean
     AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider =  new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(authenticationService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }

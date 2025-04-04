@@ -5,9 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
-public interface UserDetailsService extends org.springframework.security.core.userdetails.UserDetailsService {
-    UserDetails getUserByUsername(String username);
+
+public interface UserDetailsService{
+    Optional<User> getUserByUsername(String username);
 
     ResponseEntity<Object> registerUser(User user);
 }
