@@ -10,4 +10,8 @@ import java.util.Optional;
 @Repository
 public interface BlogPostRepo extends JpaRepository<BlogPost, Long> {
     Optional<List<BlogPost>> findByUserId(Long id);
+
+    List<BlogPost> findAllByCategoriesCategoryId(Long categoryId);
+
+    List<BlogPost> findAllByTagsTagId(Long tagId);
 }

@@ -1,6 +1,7 @@
 package com.example.blogpost.blogPost.dto;
 
 import com.example.blogpost.category.dto.CategoryDto;
+import com.example.blogpost.comment.dto.CommentDto;
 import com.example.blogpost.tag.dto.TagDto;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class BlogPostDto {
     private String content;
     private List<TagDto> tags;
     private List<CategoryDto> categories;
+    private List<CommentDto> comments;
     public Long getBlogPostId() {
         return blogPostId;
     }
@@ -58,5 +60,13 @@ public class BlogPostDto {
 
     public void setCategories(List<CategoryDto> categories) {
         this.categories = categories;
+    }
+
+    public List<CommentDto> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentDto> comments) {
+        this.comments = comments;
     }
 }

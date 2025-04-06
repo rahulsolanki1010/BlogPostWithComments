@@ -13,4 +13,10 @@ public interface BlogPostService {
     ResponseEntity updateBlogById(Long id, @Valid BlogPostDto blogPost, Long blogPostId);
 
     ResponseEntity deleteBlogById(Long blogPostId, Long id);
+
+    ResponseEntity getAllBlogs();
+
+    ResponseEntity getAllBlogsByTags(String tag);
+
+    ResponseEntity getAllBlogsByCategories(String category);
 }

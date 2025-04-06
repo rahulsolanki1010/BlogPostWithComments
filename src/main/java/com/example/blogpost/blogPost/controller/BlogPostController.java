@@ -25,7 +25,7 @@ public class BlogPostController {
     }
 
     @GetMapping("/")
-    public ResponseEntity getAllBlogs(){
+    public ResponseEntity getAllBlogsForUser(){
         User user = getLoggedInUser();
         return blogPostService.getAllBlogsForUser(user.getId());
     }
@@ -41,4 +41,20 @@ public class BlogPostController {
         User user = getLoggedInUser();
         return blogPostService.deleteBlogById(blogPostId,user.getId());
     }
+
+    @GetMapping("/all")
+    public ResponseEntity getAllBlogs(){
+        return blogPostService.getAllBlogs();
+    }
+
+    @GetMapping("/tag/{tag}")
+    public ResponseEntity getAllBlogsByTags(@PathVariable String tag){
+        return blogPostService.getAllBlogsByTags(tag);
+    }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity getAllBlogsByCategories(@PathVariable String category){
+        return blogPostService.getAllBlogsByCategories(category);
+    }
+
 }
